@@ -22,21 +22,21 @@ def create_dirs (dirName):
         print("Directory " , dirName ,  " already exists")  
 
 def data_classify(data_folder_path):
-    create_dirs(f"{data_folder_path}/smile")
-    create_dirs(f"{data_folder_path}/nonsmile")
+    create_dirs(data_folder_path + "/smile")
+    create_dirs(data_folder_path + "/nonsmile")
     for i in range(1,4001):
         train = i <= 2162
-        filepath = f"{data_folder_path}/file{i:04}.jpg"
+        filepath = data_folder_path + "/file" + "{:04d}".format(i) + ".jpg"
         if os.path.exists(filepath):
             if train:
-                shutil.move(filepath, f"{data_folder_path}/smile/file{i:04}.jpg")
-                print (f"Moved {filepath} to smile folder")
+                shutil.move(filepath, data_folder_path + "/smile/file" + "{:04d}".format(i) + ".jpg")
+                print ("Moved " + filepath + " to smile folder")
             else:
-                shutil.move(filepath, f"{data_folder_path}/nonsmile/file{i:04}.jpg")
-                print (f"Moved {filepath} to nonsmile folder")
+                shutil.move(filepath, data_folder_path + "/nonsmile/file" + "{:04d}".format(i) + ".jpg")
+                print ("Moved " + filepath + " to nonsmile folder")
             # shutil.move(f"{data_folder_path}/file{i:04}.jpg", f"dataset/{"train" if train else "test"}")
         else:
-            print (f"{filepath} does not exist")
+            print (filepath + " does not exist")
 
 def split_test_data(data_folder_path, ratio=0.2):
     create_dirs("dataset/test")
@@ -44,10 +44,10 @@ def split_test_data(data_folder_path, ratio=0.2):
     idx = list(range(1,4001))
     random.shuffle(idx)
     for i, si in enumerate(idx):
-        filePath = f"{data_folder_path}/file{si:04}.jpg"
+        filePath = data_folder_path + "/file" + "{:04d}".format(si) + ".jpg"
         if os.path.exists(filePath):
             newFilePath = "test" if i < ratio*4000 else "train"
-            newFilePath = f"dataset/{newFilePath}/file{si:04}.jpg"
+            newFilePath = "dataset/" + newFilePath + "/file" + "{:04d}".format(si) + ".jpg"
             shutil.move(filePath, newFilePath)
 #%%
 split_test_data("../../genki4k/files", 0.2)
@@ -116,7 +116,7 @@ model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']
 #train model
 #%%
 # model.fit(X_train, y_train,validation_data=(X_test, y_test), epochs=3)
-model.fit_generator(train_it, steps_per_epoch=40, validation_data=val_it, validation_steps=10)
+model.fit_generator(train_it, steps_per_epoch=40, validation_data=val_it, validation_steps=10, epochs=50)
 loss = model.evaluate_generator(test_it, steps=24)
 #show predictions for the first 3 images in the test set
 # model.predict(X_test[:4])
