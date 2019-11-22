@@ -37,9 +37,9 @@ while True:
 #        
 #        # Print result
         if pred == 0:
-            cv2.putText(face,'No smile',(20,20),cv2.FONT_HERSHEY_SIMPLEX,1,(0, 0, 255))
+            cv2.putText(face,'No smile',(30,30),cv2.FONT_HERSHEY_SIMPLEX,1,(0, 0, 255),3)
         elif pred == 1:
-            cv2.putText(face,'Smile',(20,20),cv2.FONT_HERSHEY_SIMPLEX,1,(0, 0, 255))
+            cv2.putText(face,'Smile',(30,30),cv2.FONT_HERSHEY_SIMPLEX,1,(0, 0, 255),3)
         cv2.imshow('Result',face)
 
     # Press 'q' to exit live loop

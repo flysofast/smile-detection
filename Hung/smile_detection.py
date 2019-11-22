@@ -14,7 +14,7 @@ import itertools
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 
-#%%
+#%% Utils
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
